@@ -108,7 +108,7 @@ CREATE TABLE `gurt_order`  (
   `guarantee_amount` bigint(20) NOT NULL COMMENT '担保金额',
   `validity_deadline` datetime(6) NOT NULL COMMENT '有效期',
   `guarantee_id` bigint(20) NOT NULL COMMENT '保函格式',
-  `bank_id` bigint(20) NOT NULL COMMENT '贷款银行',
+  `bank_id` bigint(20) NOT NULL COMMENT '银行',
   `project_type_id` bigint(20) NOT NULL COMMENT '项目分类',
   `amount` bigint(20) NOT NULL DEFAULT 0 COMMENT '应付金额',
   `create_user_id` bigint(11) NOT NULL,

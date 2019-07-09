@@ -78,7 +78,7 @@
 			</div>
 			<br>
 			<div class="form-group">	
-				<label class="col-sm-3 control-label">贷款银行：</label>
+				<label class="col-sm-3 control-label">银行：</label>
 				<div class="col-sm-8">
 					<select name="bankId" class="form-control m-b">
 						<option th:selected="${dict.id eq gurtOrder.bankId}" th:each="dict : ${bankList}" th:text="${dict.bankName}" th:value="${dict.id}"></option>

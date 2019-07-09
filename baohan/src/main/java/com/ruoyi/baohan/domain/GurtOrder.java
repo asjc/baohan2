@@ -53,7 +53,7 @@ public class GurtOrder extends BaseEntity
 	@Excel(name = "保函格式", prompt = "保函格式")
 	private String baoName;
 	private Long guaranteeId;
-	/** 贷款银行 */
+	/** 银行 */
 	private Long bankId;
 	/** 项目分类 */
 	@Excel(name = "项目分类", prompt = "项目分类")
@@ -145,7 +145,7 @@ public class GurtOrder extends BaseEntity
 	}
 
 	/**  */
-	@Excel(name = "贷款银行", prompt = "贷款银行")
+	@Excel(name = "银行", prompt = "银行")
 	private String bankName;
 	/**  */
 	private String bankAccount;

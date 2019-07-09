@@ -64,10 +64,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                 and gurt_order.guarantee_id=gurt_guarantee.id
                 and gurt_order.create_user_id=sys_user.user_id</if>
             <if test="id != null "> and id = #{id}</if>
-             <if test="warrantee != null  and warrantee != '' "> and warrantee = #{warrantee}</if>
-             <if test="beneficiary != null  and beneficiary != '' "> and beneficiary = #{beneficiary}</if>
-             <if test="projectNumber != null  and projectNumber != '' "> and project_number = #{projectNumber}</if>
-             <if test="projectName != null  and projectName != '' "> and project_name = #{projectName}</if>
+             <if test="warrantee != null  and warrantee != '' "> and warrantee LIKE CONCAT('%', #{warrantee}, '%')</if>
+             <if test="beneficiary != null  and beneficiary != '' "> and beneficiary LIKE CONCAT('%', #{beneficiary}, '%')</if>
+             <if test="projectNumber != null  and projectNumber != '' "> and project_number LIKE CONCAT('%', #{projectNumber}, '%')</if>
+             <if test="projectName != null  and projectName != '' "> and project_name LIKE CONCAT('%', #{projectName}, '%')</if>
              <if test="closingTime != null "> and closing_time = #{closingTime}</if>
              <if test="guaranteeAmount != null "> and guarantee_amount = #{guaranteeAmount}</if>
              <if test="validityDeadline != null "> and validity_deadline = #{validityDeadline}</if>

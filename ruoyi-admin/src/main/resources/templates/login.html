@@ -11,7 +11,7 @@
     <link href="../static/css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
     <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet"/>
     <link href="../static/css/login.min.css" th:href="@{/css/login.min.css}" rel="stylesheet"/>
-    <link href="../static/ruoyi/css/ry-ui.css" th:href="@{/ruoyi/css/ry-ui.css?v=3.4.0}" rel="stylesheet"/>
+        <link href="../static/ruoyi/css/ry-ui.css" th:href="@{/ruoyi/css/ry-ui.css?v=3.4.0}" rel="stylesheet"/>
     <script src="../static/js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
     <!--[if lt IE 9]>
     <meta http-equiv="refresh" content="0;ie.html"/>
@@ -50,7 +50,10 @@
         function sendCode() {
             var phone = $("[name=phone]").val();
             $.get("/sendCode", "phone=" + phone + "", function (r) {
-                alert(r)
+                $.modal.closeLoading();
+                $('.imgcode').click();
+                $(".code").val("");
+                $.modal.msg(r);
             })
         }
     </script>
@@ -62,7 +65,7 @@
         <div class="col-sm-5" style="margin-left: 150px">
             <form id="signupForm" class="signupForm" style="display: none">
                 <h4 class="no-margins">登录：</h4>
-                <p class="m-t-md">请输入账号密码登录<a href="javascript:;" onclick="deng()">快速登录&raquo;</a></p>
+                <p class="m-t-md">请输入账号密码登录<a href="javascript:;" onclick="deng()">&nbsp;&nbsp;&nbsp;快速登录&raquo;</a></p>
                 <input type="text" name="username" class="form-control uname" placeholder="用户名" value="admin"/>
                 <input type="password" name="password" class="form-control pword" placeholder="密码"
                        value="admin123    "/>
@@ -74,7 +77,7 @@
             </form>
             <form id="signupForm1" class="signupForm">
                 <h4 class="no-margins">快速登录：</h4>
-                <p class="m-t-md">请输入手机登录<a href="javascript:;" onclick="deng()">账号密码登录&raquo;</a></p>
+                <p class="m-t-md">请输入手机登录<a href="javascript:;" onclick="deng()">&nbsp;&nbsp;&nbsp;账号密码登录&raquo;</a></p>
                 <input type="text" name="phone" class="form-control uname" placeholder="手机号"/>
                 <input type="text" style="width: 100px;display: inline-block" name="code" class="form-control pword"
                        placeholder="验证码"/>

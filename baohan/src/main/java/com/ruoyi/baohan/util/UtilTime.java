@@ -1,4 +1,4 @@
-package com.ruoyi.baohan.controller;
+package com.ruoyi.baohan.util;
 
 import java.text.DateFormat;
 import java.text.ParseException;

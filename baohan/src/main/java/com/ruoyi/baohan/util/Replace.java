@@ -1,17 +1,19 @@
 
-package com.ruoyi.baohan.controller;
+package com.ruoyi.baohan.util;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
 
+import com.ruoyi.baohan.domain.GurtBank;
+import com.ruoyi.baohan.domain.GurtOrder;
+import com.ruoyi.baohan.domain.GurtProjectType;
+import com.ruoyi.baohan.service.IGurtOrderService;
+import com.ruoyi.baohan.service.IGurtProjectTypeService;
 import com.ruoyi.common.config.ServerConfig;
 import org.apache.poi.POIXMLDocument;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
@@ -29,6 +31,45 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 
 public class Replace {
+
+    public static Map getMap(GurtOrder gurtOrder, IGurtProjectTypeService iGurtProjectTypeService,IGurtOrderService gurtOrderService)throws Exception{
+        Map map=new HashMap();
+        map.put("warrantee", gurtOrder.getWarrantee());
+        map.put("beneficiary", gurtOrder.getBeneficiary());
+        List<GurtProjectType> gurtProjectTypeList = iGurtProjectTypeService.selectGurtProjectTypeList(new GurtProjectType());
+        for (GurtProjectType type : gurtProjectTypeList) {
+            if (type.getId() == gurtOrder.getProjectTypeId())
+                gurtOrder.setFenName(type.getName());
+        }
+        List<GurtBank> gurtBanks=gurtOrderService.getAllBank();
+        for (GurtBank bank : gurtBanks) {
+            if(bank.getId()==gurtOrder.getBankId())
+                gurtOrder.setBankName(bank.getBankName());
+        }
+        map.put("projectName", gurtOrder.getProjectName());
+
+        map.put("xiao", gurtOrder.getAmount().toString());
+        map.put("da", UtilNumber.convert(gurtOrder.getAmount().toString()));
+        Calendar calendar = Calendar.getInstance();
+        Date date = new Date();
+        if(gurtOrder.getClosingTime()==null)
+        calendar.setTime(date);
+        calendar.setTime(gurtOrder.getClosingTime());
+        map.put("yy", String.valueOf(calendar.get(Calendar.YEAR)));
+        map.put("mm", String.valueOf(calendar.get(Calendar.MONTH) + 1));
+        map.put("dd", String.valueOf(calendar.get(Calendar.DATE)));
+        //判断有限期类型
+        Calendar calendar1 = new GregorianCalendar();
+        calendar1.setTime(gurtOrder.getClosingTime());
+        if(!gurtOrder.getValidityDeadline().contains("-")){
+            calendar1.add(calendar.DATE, Integer.valueOf(gurtOrder.getValidityDeadline())); // 负数为提前几天，正数为推迟几天
+        }
+        map.put("y2", String.valueOf(calendar1.get(Calendar.YEAR)));
+        map.put("m2", String.valueOf(calendar1.get(Calendar.MONTH) + 1));
+        map.put("d2", String.valueOf(calendar1.get(Calendar.DATE)));
+        map.put("bk", gurtOrder.getBankName());
+        return map;
+    }
 
     public static void searchAndReplace(String srcPath, String destPath,
                                         Map<String, String> map) {
@@ -82,10 +123,6 @@ public class Replace {
     }
 
     public static void main(String[] args) throws Exception {
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("${name}", "艾程");
-        String srcPath = "E:\\dl/58e2bb25f87186d749d42cdbaf73ba6e.docx";
-        String destPath = "E:\\dl/58e2bb25f87186d749d42cdbaf73ba6e123123.docx";
-        searchAndReplace(srcPath, destPath, map);
+
     }
 }

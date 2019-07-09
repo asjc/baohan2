@@ -92,6 +92,8 @@ public class SysLoginController extends BaseController
             result="同一手机号码1天内发送次数应小于等于10";
         }else if(result.contains("00126")){
             result="手机号为空";
+        }else if(result.contains("00174")){
+            result="同一分钟内不能发送大于两次";
         }
         return result;
     }
