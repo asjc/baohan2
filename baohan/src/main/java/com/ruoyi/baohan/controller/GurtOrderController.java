@@ -113,11 +113,18 @@ public class GurtOrderController extends BaseController {
         int role = UtilOrder.getRole();
         modelMap.put("role", role);
 
+
         startPage();
         List<GurtOrder> list = null;
         if (role == 1) {
             list = gurtOrderService.selectGurtOrderList(gurtOrder);
-        } else {
+        }else if(role==4){
+            gurtOrder.setCreateUserId(ShiroUtils.getUserId());
+            list=gurtOrderService.selectGurtOrderListByzy(gurtOrder);
+        }else if(role == 3){
+            gurtOrder.setCreateUserId(ShiroUtils.getUserId());
+            list=gurtOrderService.selectGurtOrderListBykh(gurtOrder);
+        }else {
             gurtOrder.setCreateUserId(ShiroUtils.getUserId());
             list = gurtOrderService.selectGurtOrderList(gurtOrder);
         }
@@ -270,10 +277,13 @@ public class GurtOrderController extends BaseController {
      * 修改订单
      */
     @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") Long id, ModelMap mmap) {
+    public String edit(@PathVariable("id") Long id, ModelMap mmap)throws Exception {
         List<GurtOrderFile> fileList = gurtOrderService.selectOrderFile(id.intValue());
         mmap.put("fileList", fileList);
         GurtOrder gurtOrder = gurtOrderService.selectGurtOrderById(id);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date=sdf.parse(gurtOrder.getClosingTime());
+        gurtOrder.setClosingTime(sdf.format(date));
         mmap.put("gurtOrder", gurtOrder);
         List<GurtGuarantee> gurtGuaranteeList = iGurtGuaranteeService.selectGurtGuaranteeList(new GurtGuarantee());
 
@@ -304,8 +314,11 @@ public class GurtOrderController extends BaseController {
     }
 
     @GetMapping("/chakan/{id}")
-    public Object chakan(@PathVariable("id") Long id, ModelMap mmap) {
+    public Object chakan(@PathVariable("id") Long id, ModelMap mmap)throws Exception {
         GurtOrder gurtOrder = gurtOrderService.selectGurtOrderById(id);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date=sdf.parse(gurtOrder.getClosingTime());
+        gurtOrder.setClosingTime(sdf.format(date));
         mmap.put("gurtOrder", gurtOrder);
 
         List<GurtOrderFile> fileList = gurtOrderService.selectOrderFile(id.intValue());

@@ -54,13 +54,14 @@ public class Replace {
         Date date = new Date();
         if(gurtOrder.getClosingTime()==null)
         calendar.setTime(date);
-        calendar.setTime(gurtOrder.getClosingTime());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        calendar.setTime(sdf.parse(gurtOrder.getClosingTime()));
         map.put("yy", String.valueOf(calendar.get(Calendar.YEAR)));
         map.put("mm", String.valueOf(calendar.get(Calendar.MONTH) + 1));
         map.put("dd", String.valueOf(calendar.get(Calendar.DATE)));
         //判断有限期类型
         Calendar calendar1 = new GregorianCalendar();
-        calendar1.setTime(gurtOrder.getClosingTime());
+        calendar1.setTime(sdf.parse(gurtOrder.getValidityDeadline()));
         if(!gurtOrder.getValidityDeadline().contains("-")){
             calendar1.add(calendar.DATE, Integer.valueOf(gurtOrder.getValidityDeadline())); // 负数为提前几天，正数为推迟几天
         }

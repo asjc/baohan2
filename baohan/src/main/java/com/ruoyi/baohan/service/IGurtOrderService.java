@@ -29,7 +29,8 @@ public interface IGurtOrderService {
      * @return 订单集合
      */
     public List<GurtOrder> selectGurtOrderList(GurtOrder gurtOrder);
-
+    public List<GurtOrder> selectGurtOrderListBykh(GurtOrder gurtOrder);
+    public List<GurtOrder> selectGurtOrderListByzy(GurtOrder gurtOrder);
     /**
      * 新增订单
      *

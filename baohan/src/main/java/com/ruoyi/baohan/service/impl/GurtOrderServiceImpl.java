@@ -57,6 +57,16 @@ public class GurtOrderServiceImpl implements IGurtOrderService {
         return gurtOrderMapper.selectGurtOrderList(gurtOrder);
     }
 
+    @Override
+    public List<GurtOrder> selectGurtOrderListBykh(GurtOrder gurtOrder) {
+        return gurtOrderMapper.selectGurtOrderListBykh(gurtOrder);
+    }
+
+    @Override
+    public List<GurtOrder> selectGurtOrderListByzy(GurtOrder gurtOrder) {
+        return gurtOrderMapper.selectGurtOrderListByzy(gurtOrder);
+    }
+
     /**
      * 新增订单
      *

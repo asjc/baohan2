@@ -42,7 +42,7 @@ public class GurtOrder extends BaseEntity
 	private String projectName;
 	/** 截标日期 */
 	@Excel(name = "截标日期", prompt = "截标日期")
-	private Date closingTime;
+	private String closingTime;
 	/** 担保金额 */
 	@Excel(name = "担保金额", prompt = "担保金额")
 	private Long guaranteeAmount;
@@ -203,12 +203,12 @@ public class GurtOrder extends BaseEntity
 	{
 		return projectName;
 	}
-	public void setClosingTime(Date closingTime)
+	public void setClosingTime(String closingTime)
 	{
 		this.closingTime = closingTime;
 	}
 
-	public Date getClosingTime()
+	public String getClosingTime()
 	{
 		return closingTime;
 	}
