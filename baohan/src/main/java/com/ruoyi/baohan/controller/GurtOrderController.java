@@ -242,7 +242,8 @@ public class GurtOrderController extends BaseController {
         Replace.searchAndReplace(ab, newpath, map);
         String a = serverConfig.getUrl() + newpath.substring(newpath.lastIndexOf("/profile"));
         gurtOrder.setBaohanfile(a);
-        return toAjax(gurtOrderService.updateGurtOrder(gurtOrder, fileNames, fileUrls, money));
+        gurtOrderService.updateGurtOrder(gurtOrder, fileNames, fileUrls, money);
+        return toAjax(1);
     }
 
     /**

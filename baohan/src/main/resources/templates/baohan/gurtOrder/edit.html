@@ -68,7 +68,7 @@
 					<input id="validityDeadline" required name="validityDeadline" th:value="${gurtOrder.validityDeadline}" class="form-control" type="text">
 				</div>
 			</div>
-			<div class="form-group">	
+			<div class="form-group">
 				<label class="col-sm-3 control-label">保函格式：</label>
 				<div class="col-sm-8">
 				<select name="guaranteeId" class="form-control m-b">
@@ -95,7 +95,7 @@
 			</div>
 			<br>
 			<div class="form-group" style="width: 1200px">
-				<label class="font-noraml">营业执照:温馨提示：请上传营业执照、招标文件等，文件请命好名字再进行上传(暂不支持图片.jpg/.png下载)</label>
+				<label class="font-noraml">营业执照:温馨提示：请上传营业执照、招标文件等，文件请命好名字再进行上传</label>
 				<br>
 				<div class="filelist" th:id="${file.id}" th:each="file:${fileList}" style="height: 110px;width: 270px;border: 1px solid #8D8D8D;border-radius: 5px;display: inline-block">
 				<span style="font-weight: bold" th:text="${file.name}"></span>
@@ -216,7 +216,7 @@
                 if ($.validate.form()) {
                     $("[name=fileNames]").val(uploadFileName)
                     $("[name=fileUrls]").val(uploadFileUrl)
-                    $.operate.save(prefix + "/edit/", $('#form-gurtOrder-add').serialize());
+                    $.operate.save(prefix + "/edit?id=1", $('#form-gurtOrder-add').serialize());
                 }
 			}
 	    }

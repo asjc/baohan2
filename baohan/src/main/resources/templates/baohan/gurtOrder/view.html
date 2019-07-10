@@ -95,14 +95,14 @@
 			</div>
 			<br>
 			<div class="form-group" style="width: 1200px">
-				<label class="font-noraml">营业执照:温馨提示：请上传营业执照、招标文件等，文件请命好名字再进行上传(暂不支持图片.jpg/.png下载)</label>
+				<label class="font-noraml">营业执照:温馨提示：请上传营业执照、招标文件等，文件请命好名字再进行上传</label>
 				<br>
 				<div class="filelist" th:id="${file.id}" th:each="file:${fileList}" style="height: 110px;width: 270px;border: 1px solid #8D8D8D;border-radius: 5px;display: inline-block">
 				<span style="font-weight: bold" th:text="${file.name}"></span>
 					<span th:text="'上传者:'+${file.createUserName}"></span>
 					<span th:text="'上传日期:'+${file.createTime}"></span>
 					<span style="text-align: right">&nbsp;&nbsp;&nbsp;<a th:href="${file.fileDownLoadUrl}">下载</a>&nbsp;&nbsp;</span>
-				</div> <!--th:href="'/baohan/gurtOrder/xiazai?url='+${file.fileDownLoadUrl}"-->
+				</div>
 				<div class="file-loading" style="width: 650px">
 					<input id="fileinput-demo-1" name="file" type="file" multiple>
 					<input type="hidden" name="guaranteeFilePath" value="0">

@@ -61,9 +61,11 @@ public class Replace {
         map.put("dd", String.valueOf(calendar.get(Calendar.DATE)));
         //判断有限期类型
         Calendar calendar1 = new GregorianCalendar();
-        calendar1.setTime(sdf.parse(gurtOrder.getValidityDeadline()));
+
         if(!gurtOrder.getValidityDeadline().contains("-")){
             calendar1.add(calendar.DATE, Integer.valueOf(gurtOrder.getValidityDeadline())); // 负数为提前几天，正数为推迟几天
+        }else{
+            calendar1.setTime(sdf.parse(gurtOrder.getValidityDeadline()));
         }
         map.put("y2", String.valueOf(calendar1.get(Calendar.YEAR)));
         map.put("m2", String.valueOf(calendar1.get(Calendar.MONTH) + 1));
