@@ -134,7 +134,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             and gurt_project_type.id=gurt_order.project_type_id
             and gurt_order.guarantee_id=gurt_guarantee.id
             and gurt_order.create_user_id=sys_user.user_id
-            and (gurt_order.create_user_id in(select user_id from sys_user where invite_user_id in(select user_id from sys_user where invite_user_id=#{createUserId})) OR gurt_order.create_user_id in(select user_id from sys_user where invite_user_id=#{createUserId}))
+            and (gurt_order.create_user_id in
+                (select user_id from sys_user where invite_user_id in
+                (select user_id from sys_user where invite_user_id=#{createUserId}))
+                OR gurt_order.create_user_id in
+                (select user_id from sys_user where invite_user_id=#{createUserId}))
             </if>
             <if test="id != null ">and id = #{id}</if>
             <if test="warrantee != null  and warrantee != '' "> and warrantee LIKE CONCAT('%', #{warrantee}, '%')</if>

@@ -81,7 +81,7 @@
 
                 <form action="/common/uploadFiles" method="post" id="inputform" enctype="multipart/form-data">
                     <div>
-                    <span class="btn btn-white btn-file"><span class="fileinput-new">上传招标</span><span
+                    <span class="btn btn-white btn-file  btn-del btn-del disabled"><span class="fileinput-new ">上传招标</span><span
                             class="fileinput-exists">更改</span>
                         <input type="file" name="file" multiple></span>
                         <input type="hidden" value="0" name="ids">
@@ -112,7 +112,8 @@
     function xiazai() {
         var baohans = $.table.selectColumns("baohanfile");
         if(baohans.length==0){
-            alert("请选择下载保函订单");
+            $.modal.closeLoading();
+            $.modal.msg("请选择下载保函订单");
         }else{
             for (var i = 0; i < baohans.length; i++) {
                 window.open(baohans[i], '_blank');
@@ -132,11 +133,13 @@
         }
         if(flag){
             $.get(prefix+"/modifytijiao","ids="+ids+"",function (data) {
-                alert(data)
+                $.modal.closeLoading();
+                $.modal.msg(data);
                 $.table.refresh();
             })
         }else{
-            alert('只允许提交已撤销和待提交订单!')
+            $.modal.closeLoading();
+            $.modal.msg("只允许提交已撤销和待提交订单!");
         }
     }
     
@@ -144,7 +147,8 @@
         var checkedNum = $("#bootstrap-table input[type='checkbox']:checked").length;
         $("[name=ids]").val($.table.selectColumns("id"));
         if (checkedNum == 0) {
-            alert("请选择上传招标订单");
+            $.modal.closeLoading();
+            $.modal.msg("请选择上传招标订单");
         } else {
             var formData = new FormData($("#inputform")[0]);
             $.ajax({
@@ -156,7 +160,8 @@
                 contentType: false,
                 processData: false,
                 success: function(data) {
-                    alert(data)
+                    $.modal.closeLoading();
+                    $.modal.msg(data);
                 },
                 error: function(data) {
                 }

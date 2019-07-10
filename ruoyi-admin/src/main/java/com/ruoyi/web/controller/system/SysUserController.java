@@ -111,6 +111,33 @@ public class SysUserController extends BaseController
     }
 
     /**
+     * fenpei
+     */
+    @GetMapping("/fenpei")
+    public String fenpei(ModelMap mmap)
+    {
+        mmap.put("zhuanyuanList",roleService.selectRoleByRole(4));
+        mmap.put("jingliList",roleService.selectRoleByRole(3));
+        return prefix + "/fenpei";
+    }
+
+    /**
+     * fenpei2
+     */
+    @GetMapping("/fenpei2")
+    public String fenpei2(Integer zhuanyuanId,Long[] jingliId)
+    {
+        SysUser user=new SysUser();
+        for (Long aLong : jingliId) {
+            user.setUserId(aLong);
+            user.setInviteUserId(zhuanyuanId);
+            userService.updateUserInfo(user);
+        }
+
+        return prefix + "/fenpei";
+    }
+
+    /**
      * 新增保存用户
      */
     @RequiresPermissions("system:user:add")

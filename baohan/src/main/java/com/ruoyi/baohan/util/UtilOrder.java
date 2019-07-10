@@ -12,19 +12,18 @@ public class UtilOrder {
     public static int getRole(){
         int role=0;
         List<SysRole> user= ShiroUtils.getSysUser().getRoles();
+        String roles=null;
         for (int i=0;i<user.size();i++){
-            if(user.get(i).getRoleId()==1) {
-                role = 1;
-                break;
-            }
-            if(user.get(i).getRoleId()==4) {
-                role = 4;
-                break;
-            }
-            if(user.get(i).getRoleId()==3) {
-                role = 3;
-                break;
-            }
+            roles=roles+user.get(i).getRoleId();
+        }
+        if(roles.contains("3")) {
+            role = 3;
+        }
+        if(roles.contains("4")) {
+            role = 4;
+        }
+        if(roles.contains("1")) {
+            role = 1;
         }
         return role;
     }

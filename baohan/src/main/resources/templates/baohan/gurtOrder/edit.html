@@ -95,7 +95,7 @@
 			</div>
 			<br>
 			<div class="form-group" style="width: 1200px">
-				<label class="font-noraml">营业执照:温馨提示：请上传营业执照、招标文件等，文件请命好名字再进行上传</label>
+				<label class="font-noraml">营业执照:温馨提示：请上传营业执照、招标文件等，文件请命好名字再进行上传(暂不支持图片.jpg/.png下载)</label>
 				<br>
 				<div class="filelist" th:id="${file.id}" th:each="file:${fileList}" style="height: 110px;width: 270px;border: 1px solid #8D8D8D;border-radius: 5px;display: inline-block">
 				<span style="font-weight: bold" th:text="${file.name}"></span>
@@ -204,17 +204,19 @@
                 var result = date.match(/((^((1[8-9]\d{2})|([2-9]\d{3}))(-)(10|12|0?[13578])(-)(3[01]|[12][0-9]|0?[1-9])$)|(^((1[8-9]\d{2})|([2-9]\d{3}))(-)(11|0?[469])(-)(30|[12][0-9]|0?[1-9])$)|(^((1[8-9]\d{2})|([2-9]\d{3}))(-)(0?2)(-)(2[0-8]|1[0-9]|0?[1-9])$)|(^([2468][048]00)(-)(0?2)(-)(29)$)|(^([3579][26]00)(-)(0?2)(-)(29)$)|(^([1][89][0][48])(-)(0?2)(-)(29)$)|(^([2-9][0-9][0][48])(-)(0?2)(-)(29)$)|(^([1][89][2468][048])(-)(0?2)(-)(29)$)|(^([2-9][0-9][2468][048])(-)(0?2)(-)(29)$)|(^([1][89][13579][26])(-)(0?2)(-)(29)$)|(^([2-9][0-9][13579][26])(-)(0?2)(-)(29)$))/);
                 if(result==null)
                 {
-                    alert("截标时间请输入正确的日期格式如(2012-01-01)");
+                    $.modal.closeLoading();
+                    $.modal.msg("截标时间请输入正确的日期格式如(2012-01-01)");
                     flag=false;
                 }else if(result1==null&&isNaN(youxiao)){
-                    alert("有效期请输入时间例：(2012-01-01)或者有效期例:(60)")
+                    $.modal.closeLoading();
+                    $.modal.msg("有效期请输入时间例：(2012-01-01)或者有效期例:(60)");
                     flag=false;
 				}
 	        if(flag){
                 if ($.validate.form()) {
                     $("[name=fileNames]").val(uploadFileName)
                     $("[name=fileUrls]").val(uploadFileUrl)
-                    $.operate.save(prefix + "/edit", $('#form-gurtOrder-add').serialize());
+                    $.operate.save(prefix + "/edit/", $('#form-gurtOrder-add').serialize());
                 }
 			}
 	    }

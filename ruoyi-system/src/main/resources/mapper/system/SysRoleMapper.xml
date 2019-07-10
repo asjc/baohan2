@@ -18,7 +18,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="updateTime"   column="update_time"    />
 		<result property="remark"       column="remark"         />
 	</resultMap>
-	
+	<select id="selectRoleByRole" resultType="SysUser">
+select *,sys_user.user_id as userId,sys_user.user_name as userName from sys_user,sys_user_role where sys_user.user_id=sys_user_role.user_id and sys_user_role.role_id=#{id}
+	</select>
 	<sql id="selectRoleContactVo">
         select distinct r.role_id, r.role_name, r.role_key, r.role_sort, r.data_scope,
             r.status, r.del_flag, r.create_time, r.remark 

@@ -44,6 +44,7 @@ public interface ISysRoleService
      */
     public List<SysRole> selectRoleAll();
 
+    public List<SysRole> selectRoleByRole(Integer id);
     /**
      * 通过角色ID查询角色
      * 

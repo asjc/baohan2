@@ -18,7 +18,7 @@ public interface SysRoleMapper
      * @return 角色数据集合信息
      */
     public List<SysRole> selectRoleList(SysRole role);
-
+    public List<SysRole> selectRoleByRole(Integer id);
     /**
      * 根据用户ID查询角色
      * 
