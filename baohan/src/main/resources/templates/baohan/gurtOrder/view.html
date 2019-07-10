@@ -101,8 +101,8 @@
 				<span style="font-weight: bold" th:text="${file.name}"></span>
 					<span th:text="'上传者:'+${file.createUserName}"></span>
 					<span th:text="'上传日期:'+${file.createTime}"></span>
-					<span style="text-align: right">&nbsp;&nbsp;&nbsp;<a th:href="'/baohan/gurtOrder/xiazai?url='+${file.fileDownLoadUrl}">下载</a>&nbsp;&nbsp;</span>
-				</div>
+					<span style="text-align: right">&nbsp;&nbsp;&nbsp;<a th:href="${file.fileDownLoadUrl}">下载</a>&nbsp;&nbsp;</span>
+				</div> <!--th:href="'/baohan/gurtOrder/xiazai?url='+${file.fileDownLoadUrl}"-->
 				<div class="file-loading" style="width: 650px">
 					<input id="fileinput-demo-1" name="file" type="file" multiple>
 					<input type="hidden" name="guaranteeFilePath" value="0">
