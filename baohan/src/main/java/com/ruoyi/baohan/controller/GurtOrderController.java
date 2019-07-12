@@ -155,7 +155,7 @@ public class GurtOrderController extends BaseController {
     public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception {
         ExcelUtil<GurtOrder> util = new ExcelUtil<GurtOrder>(GurtOrder.class);
         List<GurtOrder> gurtOrderList = util.importExcel(file.getInputStream());
-        DaoRuExption.thRun(gurtOrderList;
+        DaoRuExption.thRun(gurtOrderList);
         return AjaxResult.success(gurtOrderService.importExcel(gurtOrderList));
     }
 
