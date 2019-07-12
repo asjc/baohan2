@@ -32,7 +32,7 @@
 				<a class="btn btn-success" onclick="test()" shiro:hasPermission="baohan:gurtCategory:add"/>
 					<i class="fa fa-plus"></i> 添加
 				</a>
-				<a class="btn btn-success" href="gurtCategory/shezhi/0" shiro:hasPermission="baohan:gurtCategory:add"/>
+				<a class="btn btn-success" onclick="shez()" shiro:hasPermission="baohan:gurtCategory:add"/>
 				<i class="fa fa-plus"></i> 设置项目分类
 				</a>
 
@@ -50,7 +50,11 @@
         var removeFlag = [[${@permission.hasPermi('baohan:gurtCategory:remove')}]];
         var prefix = ctx + "baohan/gurtCategory";
 		function test() {
-            $.modal.open(1, "/baohan/gurtCategory/add/0", 1650, 800);
+            $.modal.open("添加", "/baohan/gurtCategory/add/0", 1500);
+        }
+        function shez() {
+            $.modal.open("设置", "/baohan/gurtCategory/shezhi/0", 1500);
+
         }
         $(function() {
             var options = {

@@ -60,16 +60,23 @@ public class Replace {
         map.put("mm", String.valueOf(calendar.get(Calendar.MONTH) + 1));
         map.put("dd", String.valueOf(calendar.get(Calendar.DATE)));
         //判断有限期类型
-        Calendar calendar1 = new GregorianCalendar();
-
+        Calendar calendar2 = new GregorianCalendar();
         if(!gurtOrder.getValidityDeadline().contains("-")){
-            calendar1.add(calendar.DATE, Integer.valueOf(gurtOrder.getValidityDeadline())); // 负数为提前几天，正数为推迟几天
+            calendar2.add(calendar.DATE, Integer.valueOf(gurtOrder.getValidityDeadline())); // 负数为提前几天，正数为推迟几天
         }else{
-            calendar1.setTime(sdf.parse(gurtOrder.getValidityDeadline()));
+            calendar2.setTime(sdf.parse(gurtOrder.getValidityDeadline()));
         }
-        map.put("y2", String.valueOf(calendar1.get(Calendar.YEAR)));
-        map.put("m2", String.valueOf(calendar1.get(Calendar.MONTH) + 1));
-        map.put("d2", String.valueOf(calendar1.get(Calendar.DATE)));
+        map.put("y2", String.valueOf(calendar2.get(Calendar.YEAR)));
+        map.put("m2", String.valueOf(calendar2.get(Calendar.MONTH) + 1));
+        map.put("d2", String.valueOf(calendar2.get(Calendar.DATE)));
+
+
+        Calendar calendar1 = new GregorianCalendar();
+        calendar1.setTime(date);
+        map.put("y1", String.valueOf(calendar1.get(Calendar.YEAR)));
+        map.put("m1", String.valueOf(calendar1.get(Calendar.MONTH) + 1));
+        map.put("d1", String.valueOf(calendar1.get(Calendar.DATE)));
+
         map.put("bk", gurtOrder.getBankName());
         return map;
     }

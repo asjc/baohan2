@@ -29,7 +29,7 @@
 			<div  id="u2399" class="ax_default" th:each="project:${gurtCategory.gurtProjectTypeList}">
 				<div style="width: 440px;text-align: left;font-weight: bold" th:text="${project.name}"></div>
 				<a th:href="@{'/baohan/gurtProjectTypeCostConfig/addProjectType/?id='+${project.id}+'&catId='+${catId}}">修改</a>
-				<a th:href="@{'/baohan/gurtProjectTypeCostConfig/del/'+${project.id}}">删除</a>
+				<a th:onclick="'del('+${project.id}+')'">删除</a>
 				<br>
 				<!-- Unnamed (Table Cell) -->
 				<div id="u2400" class="ax_default table_cell" style="width: 200px">
@@ -101,7 +101,12 @@
     function submitHandler() {
 		$.operate.save(prefix + "/modify", $("form").serialize());
 	}
-
+	function del(id) {
+		$.get("/baohan/gurtProjectTypeCostConfig/del","id="+id+"",function (data) {
+            $.modal.closeLoading();
+            $.modal.msg(data);
+        })
+    }
 </script>
 </body>
 </html>

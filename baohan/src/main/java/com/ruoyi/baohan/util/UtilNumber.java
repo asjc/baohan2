@@ -36,7 +36,6 @@ public class UtilNumber
                 .replaceAll("9", "玖");
 
         // 加上结尾单位
-        retStr += "元整";
         System.out.println(retStr);
 
         return retStr;

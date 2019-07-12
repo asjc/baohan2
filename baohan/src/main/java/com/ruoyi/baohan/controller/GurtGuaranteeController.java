@@ -82,7 +82,6 @@ public class GurtGuaranteeController extends BaseController
 	/**
 	 * 新增保存保函
 	 */
-	@RequiresPermissions("baohan:gurtGuarantee:add")
 	@Log(title = "保函", businessType = BusinessType.INSERT)
 	@PostMapping("/add")
 	@ResponseBody

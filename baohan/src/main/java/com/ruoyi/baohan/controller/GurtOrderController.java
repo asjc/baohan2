@@ -7,6 +7,7 @@ import java.util.*;
 
 import com.ruoyi.baohan.domain.*;
 import com.ruoyi.baohan.service.*;
+import com.ruoyi.baohan.util.DaoRuExption;
 import com.ruoyi.baohan.util.Replace;
 import com.ruoyi.baohan.util.UtilNumber;
 import com.ruoyi.baohan.util.UtilOrder;
@@ -137,8 +138,14 @@ public class GurtOrderController extends BaseController {
     @RequiresPermissions("baohan:gurtOrder:export")
     @PostMapping("/export")
     @ResponseBody
-    public AjaxResult export(GurtOrder gurtOrder) {
-        List<GurtOrder> list = gurtOrderService.selectGurtOrderList(gurtOrder);
+    public AjaxResult export(Long[] ids) {
+        List<GurtOrder> list=new ArrayList<>();
+
+        for (Long id : ids) {
+            GurtOrder gurtOrder=gurtOrderService.selectGurtOrderById(id);
+            list.add(gurtOrder);
+        }
+        /*List<GurtOrder> list=gurtOrderService.selectGurtOrderList(new GurtOrder());*/
         ExcelUtil<GurtOrder> util = new ExcelUtil<GurtOrder>(GurtOrder.class);
         return util.exportExcel(list, "gurtOrder");
     }
@@ -148,8 +155,8 @@ public class GurtOrderController extends BaseController {
     public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception {
         ExcelUtil<GurtOrder> util = new ExcelUtil<GurtOrder>(GurtOrder.class);
         List<GurtOrder> gurtOrderList = util.importExcel(file.getInputStream());
-        gurtOrderService.importExcel(gurtOrderList);
-        return AjaxResult.success(1);
+        DaoRuExption.thRun(gurtOrderList;
+        return AjaxResult.success(gurtOrderService.importExcel(gurtOrderList));
     }
 
     @GetMapping("/xiazai")
@@ -160,7 +167,7 @@ public class GurtOrderController extends BaseController {
         response.setContentType("multipart/form-data");
         response.setHeader("Content-Disposition",
                 "attachment;fileName=" + FileUtils.setFileDownloadHeader(request, String.valueOf(System.currentTimeMillis())));
-        FileUtils.writeBytes(url, response.getOutputStream());
+        FileUtils.writeBytes("C:/profile/upload/fde989a830be96c87a0a158bda96aa56.docx", response.getOutputStream());
         return AjaxResult.success(1);
     }
 
@@ -260,12 +267,24 @@ public class GurtOrderController extends BaseController {
             gurtProjectTypeCostConfig.setCategoryId(ShiroUtils.getSysUser().getCatId());
         }
         List<GurtProjectTypeCostConfig> gurtProjectTypeCostConfigList = iGurtProjectTypeCostConfigService.selectGurtProjectTypeCostConfigList(gurtProjectTypeCostConfig);
-        for (GurtProjectTypeCostConfig g : gurtProjectTypeCostConfigList) {
-            if (g.getStartingAmount() < gurtOrder.getGuaranteeAmount() && g.getEndingAmount() > gurtOrder.getGuaranteeAmount()) {
-                if (g.getSinglePaymentCountType() == 0) {
-                    gurtOrder.setAmount(g.getSinglePaymentCost());
-                } else {
-                    gurtOrder.setAmount(gurtOrder.getGuaranteeAmount() * g.getSinglePaymentCost() / 100);
+
+        for(int i=0;i<gurtProjectTypeCostConfigList.size();i++){
+            GurtProjectTypeCostConfig g=gurtProjectTypeCostConfigList.get(i);
+            if(i==gurtProjectTypeCostConfigList.size()-1){
+                if (g.getStartingAmount() < gurtOrder.getGuaranteeAmount()) {
+                    if (g.getSinglePaymentCountType() == 0) {
+                        gurtOrder.setAmount(g.getSinglePaymentCost());
+                    } else {
+                        gurtOrder.setAmount(gurtOrder.getGuaranteeAmount() * g.getSinglePaymentCost() / 100);
+                    }
+                }
+            }else{
+                if (g.getStartingAmount() < gurtOrder.getGuaranteeAmount() && g.getEndingAmount() >= gurtOrder.getGuaranteeAmount()) {
+                    if (g.getSinglePaymentCountType() == 0) {
+                        gurtOrder.setAmount(g.getSinglePaymentCost());
+                    } else {
+                        gurtOrder.setAmount(gurtOrder.getGuaranteeAmount() * g.getSinglePaymentCost() / 100);
+                    }
                 }
             }
         }
@@ -285,6 +304,7 @@ public class GurtOrderController extends BaseController {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date date=sdf.parse(gurtOrder.getClosingTime());
         gurtOrder.setClosingTime(sdf.format(date));
+        gurtOrder.setId(id);
         mmap.put("gurtOrder", gurtOrder);
         List<GurtGuarantee> gurtGuaranteeList = iGurtGuaranteeService.selectGurtGuaranteeList(new GurtGuarantee());
 
@@ -305,6 +325,7 @@ public class GurtOrderController extends BaseController {
         for (GurtOrderRecord record : gurtOrderRecordList) {
             sum += record.getPaidamount();
         }
+
         mmap.put("sum", sum);
         mmap.put("gurtGuaranteeList", gurtGuaranteeList);
         mmap.put("bankList", bankList);

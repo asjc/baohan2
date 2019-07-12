@@ -70,7 +70,7 @@
                shiro:hasPermission="baohan:gurtOrder:remove">
                 <i class="fa"></i> 删除
             </a>
-            <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="baohan:gurtOrder:export">
+            <a class="btn btn-warning" onclick="exportExcel()" shiro:hasPermission="baohan:gurtOrder:export">
                 <i class="fa fa-download"></i> 导出
             </a>
             <a class="btn btn-danger btn-del btn-del disabled" onclick="tjiao()">
@@ -81,7 +81,7 @@
 
                 <form action="/common/uploadFiles" method="post" id="inputform" enctype="multipart/form-data">
                     <div>
-                    <span class="btn btn-white btn-file  btn-del btn-del disabled"><span class="fileinput-new ">上传招标</span><span
+                    <span class="btn btn-white btn-file "><span class="fileinput-new ">上传招标</span><span
                             class="fileinput-exists">更改</span>
                         <input type="file" name="file" multiple></span>
                         <input type="hidden" value="0" name="ids">
@@ -107,8 +107,23 @@
     var submitFlag = [[${@permission.hasPermi('baohan:gurtOrder:submit')}]];
     var exitFlag = [[${@permission.hasPermi('baohan:gurtOrder:exit')}]];
     var prefix = ctx + "baohan/gurtOrder";
+    function exportExcel() {
 
+        $.modal.confirm("确定导出所有" + $.table._option.modalName + "吗？", function() {
+            var ids = $.table.selectColumns("id");
 
+            $.post(""+prefix+"/export", "ids="+ids+"", function(result) {
+                if (result.code == web_status.SUCCESS) {
+                    window.location.href = ctx + "common/download?fileName=" + encodeURI(result.msg) + "&delete=" + true;
+                } else if (result.code == web_status.WARNING) {
+                    $.modal.alertWarning(result.msg)
+                } else {
+                    $.modal.alertError(result.msg);
+                }
+                $.modal.closeLoading();
+            });
+        });
+    }
     function xiazai() {
         var baohans = $.table.selectColumns("baohanfile");
         if(baohans.length==0){
@@ -204,12 +219,14 @@
                 {
                     field: 'warrantee',
                     title: '被保证人',
-                    sortable: true
+                    sortable: true,
+                    width: 250
                 },
                 {
                     field: 'beneficiary',
                     title: '受益人',
-                    sortable: true
+                    sortable: true,
+                    width: 250
                 },
                 {
                     field: 'projectNumber',
@@ -219,7 +236,8 @@
                 {
                     field: 'projectName',
                     title: '项目名称',
-                    sortable: true
+                    sortable: true,
+                    width: 300
                 },
                 {
                     field: 'closingTime',
@@ -281,7 +299,7 @@
                     align: 'center',
                     formatter: function (value, row, index) {
                         var actions = [];
-                        if (role == 1||role==2||role==3) {
+                        if (role == 1||role==4||role==3) {
                             if (row.statusName == "已撤销") {
                                 actions.push('<a style="margin-bottom: 3px;margin-left: 3px" class="btn btn-danger btn-xs ' + exitFlag + '" href="/baohan/gurtOrder/modifystatus/' + row.id + '")"><i class="fa"></i>提交</a>');
                                 actions.push('<a style="margin-bottom: 3px;margin-left: 3px" class="btn btn-danger btn-xs ' + exitFlag + '" href="javascript:;" onclick="chakan('+row.id+')"><i class="fa"></i>查看</a>');

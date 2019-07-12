@@ -72,16 +72,19 @@ public class SysLoginController extends BaseController
 
     @GetMapping("/sendCode")
     @ResponseBody
-    public String sendCode(String phone,HttpServletResponse response){
+    public String sendCode(String phone,HttpServletResponse response,HttpServletRequest request){
         String code=IndustrySMS.smsCode();
+        HttpSession session=request.getSession();
+        session.setAttribute("randon",code);
+        session.setAttribute("phone",phone);
         String result=IndustrySMS.execute(phone,code,"【保函科技】注册验证码："+code+"，如非本人操作，请忽略此短信。");
-        Cookie cookie=new Cookie("randon",code);
+        /*Cookie cookie=new Cookie("randon",code);
         cookie.setMaxAge(7*24*60*60);
         response.addCookie(cookie);
 
         Cookie cookie1=new Cookie("phone",phone);
         cookie1.setMaxAge(7*24*60*60);
-        response.addCookie(cookie1);
+        response.addCookie(cookie1);*/
         if(result.contains("00141")){
             result="同一手机号码1小时内发送次数为四";
         }else if(result.contains("00025")){
@@ -103,17 +106,20 @@ public class SysLoginController extends BaseController
     ISysUserService userService;
     @PostMapping("/loginByPhone")
     @ResponseBody
-    public AjaxResult loginByPhone(String phone,String code,String msg,String url) {
+    public AjaxResult loginByPhone(String phone,String code,String msg,String url,HttpServletRequest request) {
         Cookie[] cookies = getRequest().getCookies();
         String randon = null;
         String phone1 = null;
-        for (Cookie cookie : cookies) {
+        /*for (Cookie cookie : cookies) {
             if (cookie.getName().equals("randon")) {
                 randon = cookie.getValue();
             } else if (cookie.getName().equals("phone")) {
                 phone1 = cookie.getValue();
             }
-        }
+        }*/
+        HttpSession session=request.getSession();
+        randon=(String)session.getAttribute("randon");
+        phone1=(String)session.getAttribute("phone");
             SmsAuthenticationToken token = new SmsAuthenticationToken(phone);
             Subject subject = SecurityUtils.getSubject();
             try {
@@ -148,7 +154,6 @@ public class SysLoginController extends BaseController
             user.setPassword(passwordService.encryptPassword(user.getLoginName(), password, user.getSalt()));
 
             userService.insertUser1(user);
-            userService.insertUserRole(user.getUserId().intValue());
         }
                 subject.login(token);
 

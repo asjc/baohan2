@@ -37,7 +37,7 @@ public interface IGurtOrderService {
      * @param gurtOrder 订单信息
      * @return 结果
      */
-    public int insertGurtOrder(GurtOrder gurtOrder, String[] fileNames, String[] fileUrls, String[] money);
+    public int insertGurtOrder(GurtOrder gurtOrder, String[] fileNames, String[] fileUrls, String[] money)throws Exception;
 
     List<GurtBank> getAllBank();
 

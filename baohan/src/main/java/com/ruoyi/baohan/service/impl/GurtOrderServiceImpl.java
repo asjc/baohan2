@@ -74,7 +74,7 @@ public class GurtOrderServiceImpl implements IGurtOrderService {
      * @return 结果
      */
     @Override
-    public int insertGurtOrder(GurtOrder gurtOrder, String[] fileNames, String[] fileUrls, String[] money) {
+    public int insertGurtOrder(GurtOrder gurtOrder, String[] fileNames, String[] fileUrls, String[] money)throws Exception {
         Long userId = ShiroUtils.getSysUser().getUserId();
         if (gurtOrder.getCreateUserId() == null)
             gurtOrder.setCreateUserId(userId);

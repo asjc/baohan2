@@ -4,8 +4,10 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.shiro.authz.AuthorizationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.ModelAndView;
 import com.ruoyi.common.core.domain.AjaxResult;
@@ -60,7 +62,7 @@ public class GlobalExceptionHandler
     public AjaxResult notFount(RuntimeException e)
     {
         log.error("运行时异常:", e);
-        return AjaxResult.error("运行时异常:" + e.getMessage());
+        return AjaxResult.error(e.getMessage());
     }
 
     /**

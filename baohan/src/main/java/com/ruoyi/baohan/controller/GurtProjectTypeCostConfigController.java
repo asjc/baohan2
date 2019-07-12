@@ -174,15 +174,16 @@ public class GurtProjectTypeCostConfigController extends BaseController
 	/**
 	 * 删除项目分类
 	 */
-	@RequiresPermissions("baohan:gurtProjectTypeCostConfig:remove")
 	@Log(title = "项目分类", businessType = BusinessType.DELETE)
-	@GetMapping( "/del/{id}")
-	public String remove(@PathVariable("id") Integer id)
+	@ResponseBody
+	@GetMapping( "/del")
+	public String remove(Long id)
 	{
+		if(gurtProjectTypeCostConfigService.selectGurtProjectTypeCostConfigById(id)==null)
+			return "不允许删除最后一个项目分类";
 		gurtProjectTypeCostConfigService.deleteGurtProjectTypeCostConfigByIds(String.valueOf(id));
 		gurtProjectTypeService.deleteGurtProjectTypeByIds(String.valueOf(id));
-
-		return "redirect:/baohan/gurtCategory";
+		return "删除成功";
 	}
 	
 }
